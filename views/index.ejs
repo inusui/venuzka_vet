@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- basic -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- mobile metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<!-- site metas -->
+<title>Venuzka</title>
+<!--FAvicon -->
+		<link rel="icon"  href="images/venus_logo.ico">
+		<link rel="icon" type="image/png" size="100x100"  href="images/venus_logo.png">
+
+<!-- bootstrap css -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<!-- style css -->
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<!-- Responsive-->
+<link rel="stylesheet" href="css/responsive.css">
+<!-- fevicon -->
+<link rel="icon" href="images/fevicon.png" type="image/gif" />
+<!-- Scrollbar Custom CSS -->
+<link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+<!-- Tweaks for older IEs-->
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+<!-- owl stylesheets --> 
+<link rel="stylesheet" href="css/owl.carousel.min.css">
+<link rel="stylesheet" href="css/owl.theme.default.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+
+
+</head>
+<body>
+	<section id="home">
+	<!-- section banner start -->
+	<div class="header_section">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<div><a href="index.html"><img class="logo" src="images/logo.png"></a></div>
+				</div>
+				<div class="col-md-8">
+					<div class="menu_text">
+						<ul>
+							<!--
+							<a href="#"><li class="last">Log in / Register</li></a>
+							-->
+							
+							<li class="active">
+							 <div id="myNav" class="overlay">
+                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                             <div class="overlay-content">
+                             	<a onclick="window.scrollTo(0,document.getElementById('home').scrollHeight);">Nueva Tarjeta</a>
+                                <a onclick="window.scrollTo(0,document.getElementById('nueva').scrollHeight);">Buscar Tarjeta</a>
+								<a onclick="window.scrollTo(0,document.getElementById('buscar').scrollHeight);">Ver todas las Tarjetas</a>
+                                <a href="gallery.html">Agregar Registros a la Tarjeta</a>
+                                <a href="contact.html">Eliminar Tarjeta</a>
+                              </div>
+                            </div>
+                             <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+                            </div>	
+                            </li>
+
+						</ul>
+					</div>
+			</div>
+		</div>
+		
+		<div class="banner_main">
+			<div class="container">
+				<div class="ram">
+					<div class="row">
+					    <div class="col-sm-12">
+						    <h1 class="taital">La Mejor Clinica Veterinaria</h1>
+						    <p class="consectetur_text">Consulta aqui la tarjeta de vacunacion de tu mascota</p>
+						    <div class="banner_bt">
+						    	<button  class="read_bt" onclick="window.scrollTo(0,document.getElementById('nueva').scrollHeight);">Click Here</button>
+                                <br><br><br>
+						    </div>
+					    </div>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+	<!-- section banner end -->
+	<!-- section Crear nueva Tarjeta -->
+    <section id="nueva">
+	<div class="gallery_section_2">
+		<div class="about_text">
+			<div class="container">
+				<h3 class="get_taital">Crear Nueva Tarjeta</h3>
+				<form method="post" action="/veterinaria/add">
+					<input type="text" name="id" placeholder="Identificador de la Mascota">
+					<input type="text" name="PetName" placeholder="Nombre de la Mascota">
+					<input type="text" name="Raza" placeholder="Raza">
+					<label>Sexo</label>
+					<input type="radio" name="Sexo" value="F"><label>F</label>
+					<input type="radio" name="Sexo" value="M"><label>M</label>
+					<label>Fecha de Nacimiento</label>
+					<input type="date" name="Birth" placeholder="Fecha de Nacimiento">
+					<input type="text" name="PetOwnerName" placeholder="Nombre del Dueño">
+					<input type="tel" name="OwnerPhone" placeholder="Telefono del Dueño">
+					<input type="submit" value="Agregar Datos">
+				</form>				
+
+				
+			</div>
+		</div>
+	</div>
+</section>	
+    <!-- section Crear nueva tarjeta end -->
+
+
+
+	<!-- section gallery start -->
+<section id="buscar">
+    <div class="gallery_main layout_padding">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-sm-12">
+    				<h1 class="about_taital"><strong><span style="color: #ffffff;">Buscar</span> Tarjeta</strong></h1>
+				    <p class="sed_text"> Busca la Tarjeta de tu mascota</p>
+
+					<form method="post" action="/select">
+						<input type="text" name="PetIDBuscar" placeholder="Identificacion de tu Mascota" style="width: 25%;" required>
+						<button type="submit">Buscar</button>
+					</form>
+
+
+					
+					
+
+    			</div>
+    		</div>
+    	</div>
+    </div>
+
+</section>
+<section id="all">
+    <div class="gallery_section_2">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-sm-8">
+    				<<table class="tarjeta">
+						<h2 class="pet_taital">Todas las tarjetas</h2>
+					<br><br><br><br><br>
+						<% veterinaria.forEach(function(veterinaria){%>
+						<tr><th>Datos Generales de  <h3><%= veterinaria.value.PetName %></h3> </th></tr>
+						<tr>
+							<th>Identificacion: <%= veterinaria.id %> </th>
+							<th>Raza: <%= veterinaria.value.Raza %> </th>
+							<th>Sexo <%= veterinaria.value.Sexo %></th>
+							<th>Fecha de Nacimiento: <%= veterinaria.value.Birth %></th>
+						</tr>
+						<tr>
+							<td>Nombre del Dueño: <%= veterinaria.value.PetOwnerName %></td>
+							<td>Telefono: <%= veterinaria.value.OwnerPhone %></td>
+							<td>
+								<form method="post" action="/veterinaria/delete/<%= veterinaria.key %>">
+									<input  type="hidden" value="<%= veterinaria.value.rev %>" name="rev">
+									<input type="submit" class="botonAlingRight" onclick="return confirm('Seguro que desea Eliminar este Registro?');" value="Eliminar Registro X">
+								</form>
+							</td>
+							<td>
+								
+							</td>
+						</tr>
+	
+						<% }); %>
+	
+					</table> <br> <br> <br><div class="banner_bt">
+					<button class="dog_bt">Read More</button>
+				</div>
+    			</div>
+    			<div class="col-sm-4">
+    				<div class="dog_img"><img src="images/dog-img.png" style="max-width: 100%;"></div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</section>
+	<!-- section gallery end -->
+	<!-- section get in touch start -->
+    <div class="touch_section">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-sm-12">
+				    <h1 class="get_taital"><strong><span style="color: #ffffff;">Contact</span>  Us</strong></h1>
+    			</div>
+    		</div>
+    		<div class="email_box">
+                    <div class="input_main">
+                       <div class="container">
+                          <form action="/action_page.php">
+                            <div class="form-group">
+                              <input type="text" class="email-bt" placeholder="Name" name="Name">
+                            </div>
+                            <div class="form-group">
+                              <input type="text" class="email-bt" placeholder="Your Phone Numbar" name="Name">
+                            </div>
+                            <div class="form-group">
+                              <input type="text" class="email-bt" placeholder="Your Email" name="Email">
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="Massage"></textarea>
+                            </div>
+                          </form>   
+                       </div> 
+                       <div class="send_btn">
+                        <button type="button" class="main_bt"><a href="#">Send</a></button>
+                       </div>                   
+                    </div>
+    		</div>
+    	</div>
+    </div>
+    <div class="touch_section_2">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-sm-12">
+    				<h1 class="our_texts">Our Newsletter</h1>
+    				<div class="input-group mb-3">
+                        <input class="email_bt" type="text" class="form-control" placeholder="Enter your email">
+                     <div class="input-group-append">
+                        <button class="subscribe_bt" class="btn btn-primary" type="Subscribe">Subscribe</button>  
+                     </div>
+                    </div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    <!-- section get in touch end -->
+
+	<!-- section footer start -->
+    <div class="section_footer">
+    	<div class="container">
+    		<div class="mail_section">
+    			<ul>
+    				<li class="footer-logo"><img src="images/footer-logo.png"></li>
+    				<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>
+    				<li class="footer-logo"><img src="images/call-icon.png"><span class="map_text">(+71) 9876543210</span></li>
+    				<li class="footer-logo"><img src="images/email-icon.png"><span class="map_text">Demo@gmail.com</span></li>
+    			</ul>
+    	    </div> 
+    	    <div class="footer_section_2">
+		        <div class="row">
+    		        <div class="col-sm-6 col-md-6 col-lg-3">
+    		        	<h2 class="shop_text">About Pet Shop</h2>
+    		        	<p class="dummy_text">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and </p>
+    		        </div>
+    		        <div class="col-sm-6 col-md-6 col-lg-3">
+    		        	<h2 class="shop_text">Useful Links</h2>
+    		        	<div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
+    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
+    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
+    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
+    		        </div>
+    		        <div class="col-sm-6 col-md-6 col-lg-3">
+    				    <h2 class="shop_text">Overview</h2>
+    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
+    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>    				
+    		        </div>
+    			<div class="col-sm-6 col-md-6 col-lg-3">
+    				<h2 class="adderess_text">Instagram</h2>
+    				<div class="footer-img">
+    					<div class="row">
+    						<div class="col-sm-6">
+    							<div class="footer-img"><img src="images/footer-img1.png" style="width: 100%;"></div>
+    							<div class="footer-img"><img src="images/footer-img2.png" style="width: 100%;"></div>
+    						</div>
+    						<div class="col-sm-6">
+    							<div class="footer-img"><img src="images/footer-img3.png" style="width: 100%;"></div>
+    							<div class="footer-img"><img src="images/footer-img4.png" style="width: 100%;"></div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    			</div>
+    	        </div>
+    	        <div class="social-icon">
+	        	    <div class="row">
+	        		    <div class="col-sm-12">
+	        			    <div class="icons">
+	        				    <ul>
+	        					    <li><a href="#"><img src="images/fb-icon.png"></a></li>
+	        					    <li><a href="#"><img src="images/twitter-icon.png"></a></li>
+	        					    <li><a href="#"><img src="images/google-icon.png"></a></li>
+	        					    <li><a href="#"><img src="images/linkedin-icon.png"></a></li>
+	        				    </ul>
+	        			    </div>
+	        		    </div>
+	        	    </div>
+	            </div>
+	            <div class="copyright">2019 All Rights Reserved. <a href="https://html.design">Free html Templates</a></div>
+	        </div>
+    	</div>
+    </div>
+	<!-- section footer end -->
+
+
+	<!-- MyJS Files-->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script>
+		  
+			Swal.fire({
+				title: '¿Confirma eliminar el registro: '+id+'?',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#d33',
+				cancelButtonColor: '#6c757d',
+				confirmButtonText: 'Confirmar'
+			}).then((result) => {
+				if (result.isConfirmed) {   
+					swalWithBootstrapButtons.fire(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+					)                            
+				}
+				return SubmitEvent
+			});
+		
+	</script>
+
+    <!-- Javascript files-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <script src="js/plugin.js"></script>
+      <!-- sidebar -->
+      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="js/custom.js"></script>
+      <!-- javascript --> 
+      <script src="js/owl.carousel.js"></script>
+      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+      <script>
+      $(document).ready(function(){
+      $(".fancybox").fancybox({
+         openEffect: "none",
+         closeEffect: "none"
+         });
+         
+         $(".zoom").hover(function(){
+         
+         $(this).addClass('transition');
+         }, function(){
+         
+         $(this).removeClass('transition');
+         });
+         });
+         </script> 
+
+
+   <script>
+    function openNav() {
+    document.getElementById("myNav").style.width = "100%";
+    }
+
+    function closeNav() {
+   document.getElementById("myNav").style.width = "0%";
+   }
+</script>
+     
+</body>
+</html>
