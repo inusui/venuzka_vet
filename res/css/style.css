@@ -27,26 +27,29 @@
 }
 
 .tarjeta{
+    border: 1px solid black;
+    width: 100%;
+}
+.tarjeta, tr{
+    text-align: center;
+}
 
+.botonAlingRight{
+    display:flex; justify-content:center; width:fit-content; padding:0; width: 100%;}
+
+.nuevaTarjeta{
     border: 1px solid black;
     width: auto;
     margin: 1% 5% 10% 5%;
     color: black;
-    background-color: cornsilk;
-   
+    background-color: rgb(243, 209, 116);
 }
-.tarjeta, th, td{
+.nuevaTarjeta, th, td{
     border: 1px solid black;
     text-align: left;
     padding: 5px;
     height:fit-content;
 }
-.tarjeta, tr, th{
-    text-align: center;
-}
-
-.botonAlingRight{
-    display:flex; justify-content:flex-end; width:100%; padding:0;}
 /*
 
 presentar la demostracion martes 5 y miercoles 6
@@ -743,6 +746,7 @@ button.btn.btn-primary, button.btn.btn-primary:hover, button.btn.btn-primary:foc
   width: 100%;
   text-align: center;
   margin-top: 30px;
+  color: #ffffff;
 }
 
 .overlay a {

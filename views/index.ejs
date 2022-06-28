@@ -54,9 +54,9 @@
                                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                              <div class="overlay-content">
                              	<a onclick="window.scrollTo(0,document.getElementById('home').scrollHeight);">Nueva Tarjeta</a>
-                                <a onclick="window.scrollTo(0,document.getElementById('nueva').scrollHeight);">Buscar Tarjeta</a>
+                                <a onclick="window.scrollTo(0,document.getElementById('todas_las_tarjetas').scrollHeight);">Buscar Tarjeta</a>
 								<a onclick="window.scrollTo(0,document.getElementById('buscar').scrollHeight);">Ver todas las Tarjetas</a>
-                                <a href="gallery.html">Agregar Registros a la Tarjeta</a>
+                                <a href="#nueva">Agregar Registros a la Tarjeta</a>
                                 <a href="contact.html">Eliminar Tarjeta</a>
                               </div>
                             </div>
@@ -92,21 +92,37 @@
     <section id="nueva">
 	<div class="gallery_section_2">
 		<div class="about_text">
-			<div class="container">
+			<div class="container">				
 				<h3 class="get_taital">Crear Nueva Tarjeta</h3>
-				<form method="post" action="/veterinaria/add">
-					<input type="text" name="id" placeholder="Identificador de la Mascota">
-					<input type="text" name="PetName" placeholder="Nombre de la Mascota">
-					<input type="text" name="Raza" placeholder="Raza">
-					<label>Sexo</label>
-					<input type="radio" name="Sexo" value="F"><label>F</label>
-					<input type="radio" name="Sexo" value="M"><label>M</label>
-					<label>Fecha de Nacimiento</label>
-					<input type="date" name="Birth" placeholder="Fecha de Nacimiento">
-					<input type="text" name="PetOwnerName" placeholder="Nombre del Dueño">
-					<input type="tel" name="OwnerPhone" placeholder="Telefono del Dueño">
-					<input type="submit" value="Agregar Datos">
-				</form>				
+				<table class="nuevaTarjeta">
+					<form method="post" action="/veterinaria/add">
+						<tr>
+							<td><input type="text" name="id" placeholder="Identificador de la Mascota"></td>
+							<td><input type="text" name="PetName" placeholder="Nombre de la Mascota"></td>
+							<td><input type="text" name="Especie" placeholder="Expecie"></td>
+							<td><input type="text" name="Raza" placeholder="Raza"></td>
+						</tr>
+						<tr>
+							<td>
+							<label>Sexo</label>
+							<input type="radio" name="Sexo" value="F"><label>F</label>
+							<input type="radio" name="Sexo" value="M"><label>M</label>
+							</td>
+						</tr>
+						<tr>
+							<td><label>Fecha de Nacimiento</label>
+								<input type="date" name="Birth" placeholder="Fecha de Nacimiento">
+							</td>
+							<td><input type="text" name="PetOwnerName" placeholder="Nombre del Dueño"></td>
+							<td><input type="tel" name="OwnerPhone" placeholder="Telefono del Dueño"></td>
+							<td><input type="submit" value="Agregar Datos"></td>
+
+						</tr>
+						<tr>				
+				</tr>
+				</form>
+					</form>
+				</table>
 
 				
 			</div>
@@ -114,8 +130,6 @@
 	</div>
 </section>	
     <!-- section Crear nueva tarjeta end -->
-
-
 
 	<!-- section gallery start -->
 <section id="buscar">
@@ -131,22 +145,19 @@
 						<button type="submit">Buscar</button>
 					</form>
 
-
-					
-					
-
     			</div>
     		</div>
     	</div>
     </div>
 
 </section>
+<!--
 <section id="all">
     <div class="gallery_section_2">
     	<div class="container">
     		<div class="row">
     			<div class="col-sm-8">
-    				<<table class="tarjeta">
+    				<table class="tarjeta">
 						<h2 class="pet_taital">Todas las tarjetas</h2>
 					<br><br><br><br><br>
 						<% veterinaria.forEach(function(veterinaria){%>
@@ -186,39 +197,48 @@
 </section>
 	<!-- section gallery end -->
 	<!-- section get in touch start -->
+<section id="todas_las_tarjetas">
     <div class="touch_section">
     	<div class="container">
     		<div class="row">
     			<div class="col-sm-12">
-				    <h1 class="get_taital"><strong><span style="color: #ffffff;">Contact</span>  Us</strong></h1>
+				    <h1 class="get_taital"><strong><span style="color: #ffffff;">Todas las</span>  Tarjetas</strong></h1>
     			</div>
     		</div>
     		<div class="email_box">
-                    <div class="input_main">
-                       <div class="container">
-                          <form action="/action_page.php">
-                            <div class="form-group">
-                              <input type="text" class="email-bt" placeholder="Name" name="Name">
-                            </div>
-                            <div class="form-group">
-                              <input type="text" class="email-bt" placeholder="Your Phone Numbar" name="Name">
-                            </div>
-                            <div class="form-group">
-                              <input type="text" class="email-bt" placeholder="Your Email" name="Email">
-                            </div>
-                            
-                            <div class="form-group">
-                                <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="Massage"></textarea>
-                            </div>
-                          </form>   
-                       </div> 
-                       <div class="send_btn">
-                        <button type="button" class="main_bt"><a href="#">Send</a></button>
-                       </div>                   
-                    </div>
+				<table class="tarjeta">
+					<% veterinaria.forEach(function(veterinaria){%>
+					<tr>
+						<th>Datos Generales:<h3><%= veterinaria.value.PetName %></h3></th>
+						<th>Identificacion: <%= veterinaria.id %></th>
+						<th>Raza: <%= veterinaria.value.Raza %></th>
+					</tr>
+					<tr>
+						<th>Especie: <%=veterinaria.value.Especie %></th>
+						<th>Sexo <%= veterinaria.value.Sexo %></th>
+						<th>Fecha de Nacimiento: <%= veterinaria.value.Birth %></th>
+					</tr>
+					<tr>
+						<th>Nombre del Dueño: <%= veterinaria.value.PetOwnerName %></th>
+						<th>Telefono: <%= veterinaria.value.OwnerPhone %></th>
+						<td>
+							<form method="post" action="/veterinaria/delete/<%= veterinaria.key %>">
+								<input  type="hidden" value="<%= veterinaria.value.rev %>" name="rev">
+								<input type="submit" class="botonAlingRight" onclick="return confirm('Seguro que desea Eliminar este Registro?');" value="Eliminar Registro X">
+							</form>
+						</td>
+					</tr>
+					<% }); %>
+
+				</table> <br> <br> <br>
     		</div>
     	</div>
     </div>
+</section>
+<section id="fooder">
+
+</section>
+<!-- 
     <div class="touch_section_2">
     	<div class="container">
     		<div class="row">
@@ -234,9 +254,9 @@
     		</div>
     	</div>
     </div>
-    <!-- section get in touch end -->
+    !-- section get in touch end --
 
-	<!-- section footer start -->
+	!-- section footer start --
     <div class="section_footer">
     	<div class="container">
     		<div class="mail_section">
@@ -302,8 +322,8 @@
 	        </div>
     	</div>
     </div>
-	<!-- section footer end -->
-
+	<!-- section footer end 
+-->
 
 	<!-- MyJS Files-->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

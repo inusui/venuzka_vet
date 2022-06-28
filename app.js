@@ -113,6 +113,10 @@ app.post('/select', function(req,res){
         }
     );
 });
+//Update
+app.post('/update', function(req, res){
+    //let id
+});
 
 
 app.listen(3000, function(){
