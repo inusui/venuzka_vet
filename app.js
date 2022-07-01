@@ -26,12 +26,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use(express.static('res'));
 
 /*Importaciones
 app.use('/images', express.static(__dirname + '/res/images'));
 app.use('/css', express.static(__dirname + '/res/css'))
 */
+app.use(express.static('res'));
 
 app.get('/',function(req,res){
     //res.render('index');
@@ -100,7 +100,7 @@ app.post('/'+dbname+'/delete/:id', function(req, res){
 app.post('/select', function(req,res){
    
     let id = req.body.PetIDBuscar;
-   
+    //console.log(id)
     couch.get(dbname, id).then(
         function(data, headers, status){
             
@@ -110,12 +110,87 @@ app.post('/select', function(req,res){
         }, function(error){
             res.send(error);
             res.render('select');
+            console.log("(╯°□°）╯︵ ┻━┻ Error"+ error)
         }
     );
 });
 //Update
 app.post('/update', function(req, res){
     //let id
+    let hora_cita = req.body.hora_cita;
+    let motivo = req.body.motivo;
+    let detalles = req.body.detalles;
+    let id =req.body.identificador;
+    let rev = req.body.rev;
+    if(motivo.includes('otro')){
+        console.log("^_____^")
+        motivo = req.body.otro_valor
+    }
+    //motivo = {motivo:detalles,fecha:hora_cita}
+    
+
+    couch.get(dbname, id).then(
+        
+        function(data, headers, status){
+           
+            let viejosDatos = data.data //Requiero los datos anteriores para que no me los borre todos al hacer Update
+            console.log("Asi vienen los datos viejos\n",viejosDatos)
+           
+            let STRINGviejosDatos = JSON.stringify(viejosDatos).replace(']','').replace('}','')
+            /*                       ☝1️⃣                       ☝2️⃣            ☝3️⃣
+            Necesito pasar a STRING los datos para darle mi formato al JSON
+            1️⃣ Los datos anterioes me los trae como un objeto por tanto los paso a STRING
+            2️⃣ Requiero insertar nuevos datos en el Array "Citas":[] por lo tanto remuevo el ulitmo cochete
+            3️⃣ Requiero abrir todo el JSON para no crear un nuevo documento, por lo tanto remuevo la ultima llave }
+            Justificacion:
+                    Si no lo formate simplemente se creara un nuevo registro el cual no tendra los datos generales de la tarjeta, lo que hara complicado 
+                    acceder a los nuevos registro si haco un Select especifico de las citas. 
+            */
+
+            console.log("Quiete el }? \n", STRINGviejosDatos);
+            
+
+            let registro = STRINGviejosDatos+',{"hora": " '+hora_cita+' " ,"detalles": " ' + motivo + ' " }]}'
+            console.log(
+                "Sera un JSON>\n",registro
+                /*(╯°□°）╯︵ ┻━┻
+                    (╯°□°）╯︵ ┻━┻
+                        (╯°□°）╯︵ ┻━┻
+                            (╯°□°）╯︵ ┻━┻
+                                (╯°□°）╯︵ ┻━┻
+                                    (╯°□°）╯︵ ┻━┻
+                #TODO: debes enviar la peticion en formato JSON, dentro de una variable, por tanto debes por concatenacion 
+                construir una varibale con todo el JSON que mandaras en el update
+                （︶^︶）*/
+            )
+            res.render('select',{
+                consulta:data.data
+            });            /*Ahora el update*
+
+            couch.update(dbname,{_id:id,_rev:rev},JSON.stringify(viejosDatos),{Citas:{motivo:detalles,Fecha:hora}}).then(
+                function(data, headers, status){
+                    console.log(data)
+                    /*
+                    res.render('select',{
+                        consulta:data.data
+                    });********************
+                }, function(error){
+                    res.send(error);
+                    res.render('select');
+                    console.log("(╯°□°）╯︵ ┻━┻ "+ error)
+                }
+            );
+            /*FIN UPDATE*/
+        }, function(error){
+            res.send(error);
+            res.render('select');
+            console.log("(╯°□°）╯︵ ┻━┻ Error"+ error)
+        }
+    );
+
+    console.log(id," rev ", rev," Motivo: ", motivo,"\n" )
+    
+    
 });
 
 

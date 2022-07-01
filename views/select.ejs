@@ -58,13 +58,59 @@
 
                     </tr>
                 </table>
+                <h1>Actualizar Tarjeta</h1>
+                <div>
+                    <form method="post" action="/update">
+                        <% 
+                        let today = new Date()
+                        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-                <form>
-                    
-                </form>
+                        var dateTime = date+' '+time;
+                        %>
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type="text"  name="hora_cita" value="<%= dateTime %>" readonly>
+                                </td>
+                                <td>
+                                    <select name="motivo" id="select-list">
+                                        <option value="Citas">Cita</option>
+                                        <option value="otro">Otro</option>
+                                        <input type="text" id="txt-custom" name="otro_valor" placeholder="Nuevo Motivo"/>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <textarea name="detalles" placeholder="Detalles de la Visita" style="width:300px; height: 300px;" ></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <input type="text" value="<%= consulta._id %>" name="identificador">
+                        <input type="text" value="<%= consulta._rev%>" name="rev">
+                        <input type="submit" value="Agregar Cambios ✅">
+                      <script>
+                        let selectEl = document.getElementById('select-list');
+                        document.getElementById('txt-custom').style.display = 'none';
+                        selectEl.addEventListener('change', (e) => {
+                        if (e.target.value == 'otro') {
+                            document.getElementById('txt-custom').style.display = 'block';
+                        } else {
+                            document.getElementById('txt-custom').style.display = 'none';
+                        }
+                        });
+                      </script>
+                    </form>
+                </div>
                 
             </div>
         </div>
+        <!--JS-->
+        <script>
+            document.getElementById("hora_actual").innerHTML = Date();
+        </script>
     </section>
 
 </body>

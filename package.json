@@ -1,7 +1,7 @@
 {
-  "name": "vet-venuzka",
+  "name": "venuzka-vet",
   "version": "1.0.0",
-  "description": "",
+  "description": "Aplicacion web que guarda el registro de todas las tarjetas de sus pacientes en couchdb una base de datos NoSQL",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,6 +12,7 @@
     "body-parser": "^1.20.0",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
-    "node-couchdb": "^1.3.0"
+    "node-couchdb": "^1.3.0",
+    "nodemon": "^2.0.18"
   }
 }
