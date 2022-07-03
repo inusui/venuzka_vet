@@ -120,6 +120,7 @@ app.post('/update', function(req, res){
     let hora_cita = req.body.hora_cita;
     let motivo = req.body.motivo;
     let detalles = req.body.detalles;
+    console.log("Los detalles son Importantes y mas si son muchas lineas\n" + detalles)
     let id =req.body.identificador;
     let rev = req.body.rev;
     if(motivo.includes('otro')){
@@ -136,7 +137,7 @@ app.post('/update', function(req, res){
             let viejosDatos = data.data //Requiero los datos anteriores para que no me los borre todos al hacer Update
             console.log("Asi vienen los datos viejos\n",viejosDatos)
            
-            let STRINGviejosDatos = JSON.stringify(viejosDatos).replace(']','').replace('}','')
+            let STRINGviejosDatos = JSON.stringify(viejosDatos).replace(']','').replace(/}([^}]*)$/,'')
             /*                       ☝1️⃣                       ☝2️⃣            ☝3️⃣
             Necesito pasar a STRING los datos para darle mi formato al JSON
             1️⃣ Los datos anterioes me los trae como un objeto por tanto los paso a STRING
@@ -147,12 +148,15 @@ app.post('/update', function(req, res){
                     acceder a los nuevos registro si haco un Select especifico de las citas. 
             */
 
-            console.log("Quiete el }? \n", STRINGviejosDatos);
             
+            /*Ahora necesito quitar el "" de _id y de _rev*/
+           
+            console.log("Quiete el '}'? \n", STRINGviejosDatos);
 
-            let registro = STRINGviejosDatos+',{"hora": " '+hora_cita+' " ,"detalles": " ' + motivo + ' " }]}'
+            let registro = STRINGviejosDatos+',{"hora": "'+hora_cita+'" ,"razon": "' + motivo + '", ' +  ' "detalles": "' + detalles + '" }]}'
+            let estoyTilteado = JSON.parse(registro)
             console.log(
-                "Sera un JSON>\n",registro
+                "Sera un JSON>\n",estoyTilteado
                 /*(╯°□°）╯︵ ┻━┻
                     (╯°□°）╯︵ ┻━┻
                         (╯°□°）╯︵ ┻━┻
@@ -163,20 +167,19 @@ app.post('/update', function(req, res){
                 construir una varibale con todo el JSON que mandaras en el update
                 （︶^︶）*/
             )
-            res.render('select',{
-                consulta:data.data
-            });            /*Ahora el update*
+            res.render('select',{ consulta:data.data});            
 
-            couch.update(dbname,{_id:id,_rev:rev},JSON.stringify(viejosDatos),{Citas:{motivo:detalles,Fecha:hora}}).then(
+            /*Ahora el update*/
+            couch.update(dbname, estoyTilteado).then(
                 function(data, headers, status){
                     console.log(data)
-                    /*
+                    
                     res.render('select',{
                         consulta:data.data
-                    });********************
+                    });
                 }, function(error){
                     res.send(error);
-                    res.render('select');
+                    
                     console.log("(╯°□°）╯︵ ┻━┻ "+ error)
                 }
             );

@@ -63,7 +63,7 @@
                     <form method="post" action="/update">
                         <% 
                         let today = new Date()
-                        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                        let date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
                         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
                         var dateTime = date+' '+time;
@@ -80,11 +80,14 @@
                                         <input type="text" id="txt-custom" name="otro_valor" placeholder="Nuevo Motivo"/>
                                     </select>
                                 </td>
+                                <td>
+                                    <input name="detalles" placeholder="Resuma en una linea la consulta" style="width: 400px;" >
+                                </td>
                             </tr>
                             <tr>
-                                <td>
-                                    <textarea name="detalles" placeholder="Detalles de la Visita" style="width:300px; height: 300px;" ></textarea>
-                                </td>
+                                <td><input name="peso" placeholder="Peso"></td>
+                                <td><input name="temperatura" placeholder="Temperatura"></td>
+                                <td><input name="peso" placeholder="Peso"></td>
                             </tr>
                         </table>
                         
