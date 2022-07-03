@@ -6,6 +6,7 @@ const path = require('path');
 
 //Couch
 const NodeCouchDb = require('node-couchdb');
+const { nextTick } = require('process');
 const couch = new NodeCouchDb({
     auth:{
         user:'admin',
@@ -36,7 +37,6 @@ app.use(express.static('res'));
 app.get('/',function(req,res){
     //res.render('index');
     //res.sendFile(path.join(__dirname+'/index.html'))
-
     couch.get(dbname, viewUrl).then(
         function(data, headers, status){
             console.log(data.data.rows);
@@ -59,27 +59,42 @@ app.post('/'+dbname+'/add', function(req,res){
     let Sexo = req.body.Sexo;
     let Birth = req.body.Birth;
     let OwnerPhone = req.body.OwnerPhone;
-    //res.send(name,autor,isbn);
-    couch.uniqid().then(function(){
-        //let id = ids[0];
-        couch.insert(dbname, {
-            _id: PetID,
-            PetName:PetName,
-            PetOwnerName:PetOwnerName,
-            Raza:Raza,
-            Sexo:Sexo,
-            Birth:Birth,
-            OwnerPhone: OwnerPhone
 
-        }).then(
-            function(data, headers, status){
-                res.redirect('/')
-            },
-            function(error){
-                res.send(error)
-            }
-        );
-    });
+    couch.get(dbname, PetID).then(
+        function(data, headers, status){
+            
+            res.render('error',{
+                veterinaria:data.data
+            });
+        }, function(error){
+            couch.uniqid().then( function(){
+                //let id = ids[0];
+                couch.insert(dbname, {
+                    _id: PetID,
+                    PetName:PetName,
+                    PetOwnerName:PetOwnerName,
+                    Raza:Raza,
+                    Sexo:Sexo,
+                    Birth:Birth,
+                    OwnerPhone: OwnerPhone
+        
+                }).then(
+                    function(data, headers, status){
+                        res.redirect('/')
+                    },
+                    function(error){
+                        res.writeHead(500, { "Content-Type": "text/plain" }); 
+                        res.end("Error\n"+error); 
+                    
+                    
+                    }
+                );
+                
+            });
+        }
+    );
+    
+    
 })
 
 app.post('/'+dbname+'/delete/:id', function(req, res){
@@ -114,21 +129,20 @@ app.post('/select', function(req,res){
         }
     );
 });
+
+
 //Update
 app.post('/update', function(req, res){
-    //let id
+    
     let hora_cita = req.body.hora_cita;
     let motivo = req.body.motivo;
     let detalles = req.body.detalles;
-    console.log("Los detalles son Importantes y mas si son muchas lineas\n" + detalles)
     let id =req.body.identificador;
     let rev = req.body.rev;
     if(motivo.includes('otro')){
-        console.log("^_____^")
+        
         motivo = req.body.otro_valor
-    }
-    //motivo = {motivo:detalles,fecha:hora_cita}
-    
+    }    
 
     couch.get(dbname, id).then(
         
