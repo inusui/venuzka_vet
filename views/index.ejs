@@ -89,42 +89,57 @@
 </section>
 	<!-- section banner end -->
 	<!-- section Crear nueva Tarjeta -->
-    <section id="nueva">
+<section id="nueva">
 	<div class="gallery_section_2">
 		<div class="about_text">
-			<div class="container">				
-				<h3 class="get_taital">Crear Nueva Tarjeta</h3>
-				<table class="nuevaTarjeta">
-					<form method="post" action="/veterinaria/add">
-						<tr>
-							<td><input type="text" name="id" placeholder="Identificador de la Mascota"></td>
-							<td><input type="text" name="PetName" placeholder="Nombre de la Mascota"></td>
-							<td><input type="text" name="Especie" placeholder="Expecie"></td>
-							<td><input type="text" name="Raza" placeholder="Raza"></td>
-						</tr>
-						<tr>
-							<td>
-							<label>Sexo</label>
-							<input type="radio" name="Sexo" value="F"><label>F</label>
-							<input type="radio" name="Sexo" value="M"><label>M</label>
-							</td>
-						</tr>
-						<tr>
-							<td><label>Fecha de Nacimiento</label>
-								<input type="date" name="Birth" placeholder="Fecha de Nacimiento">
-							</td>
-							<td><input type="text" name="PetOwnerName" placeholder="Nombre del Dueño"></td>
-							<td><input type="tel" name="OwnerPhone" placeholder="Telefono del Dueño"></td>
-							<td><input type="submit" value="Agregar Datos"></td>
-
-						</tr>
-						<tr>				
-				</tr>
-				</form>
-					</form>
-				</table>
-
-				
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-8">
+						<h3 class="get_taital">Crear Nueva Tarjeta</h3>
+						<table class="nuevaTarjeta">
+							<form method="post" action="/veterinaria/add">
+								<tr>
+									<td><input type="text" name="id" placeholder="Identificador de la Mascota"></td>
+									<td><input type="text" name="PetName" placeholder="Nombre de la Mascota"></td>
+									
+								</tr>
+								<tr>
+									<td><input type="text" name="Especie" placeholder="Expecie"></td>
+									<td><input type="text" name="Raza" placeholder="Raza"></td>
+								</tr>
+								<tr>
+									<td>
+									<label>Sexo</label>
+									<input type="radio" name="Sexo" value="F"><label>F</label>
+									<input type="radio" name="Sexo" value="M"><label>M</label>
+									</td>
+									<td><label>Fecha de Nacimiento</label><br>
+										<input type="date" name="Birth" placeholder="Fecha de Nacimiento">
+									</td>							
+								</tr>
+								<tr>
+									<td><input type="text" name="PetOwnerName" placeholder="Nombre del Dueño"></td>
+									<td><input type="tel" name="OwnerPhone" placeholder="Telefono del Dueño"></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="Direccion" placeholder="Direccion"></td>
+									<td><input type="text" name="Motivo" placeholder="Motivo de la Visita"></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="Detalles" placeholder="Detalle corto de la Visita"></td>
+									<td><input type="number" name="Peso" placeholder="Peso en Libras"></td>
+								</tr>
+								<tr>
+									<td><input type="number" name="Temperatura" placeholder="Temperatura en °C"></td>
+									<td><input type="submit" value="Agregar Datos"></td>
+								</tr>
+							</form>
+						</table>
+					</div>
+					<div class="col-sm-4">
+						<div class="dog_img"><img src="images/cat-img.png" style="max-width: 100%;"></div>
+					</div>
+				</div>	
 			</div>
 		</div>
 	</div>

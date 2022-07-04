@@ -55,10 +55,16 @@ app.post('/'+dbname+'/add', function(req,res){
     let PetID = req.body.id;
     let PetName =  req.body.PetName;
     let PetOwnerName= req.body.PetOwnerName;
+    let Especie = req.body.Especie;
     let Raza= req.body.Raza;
     let Sexo = req.body.Sexo;
     let Birth = req.body.Birth;
     let OwnerPhone = req.body.OwnerPhone;
+    let Direccion = req.body.Direccion;
+    let Motivo = req.body.Motivo;
+    let Detalles = req.body.Detalles;
+    let Peso = req.body.Peso;
+    let Temperatura = req.body.Temperatura;
 
     couch.get(dbname, PetID).then(
         function(data, headers, status){
@@ -73,10 +79,19 @@ app.post('/'+dbname+'/add', function(req,res){
                     _id: PetID,
                     PetName:PetName,
                     PetOwnerName:PetOwnerName,
+                    Especie:Especie,
                     Raza:Raza,
                     Sexo:Sexo,
                     Birth:Birth,
-                    OwnerPhone: OwnerPhone
+                    OwnerPhone: OwnerPhone,
+                    Direccion: Direccion,
+                    Citas:[
+                        {Motivo:Motivo,
+                        Detalles:Detalles,
+                        Peso:Peso,
+                        Temperatura:Temperatura
+                    }
+                    ]
         
                 }).then(
                     function(data, headers, status){

@@ -30,7 +30,13 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css">
 <link rel="stylesheet" href="css/owl.theme.default.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-
+<style>
+    body{
+        background-color: #f7941d;
+        color: black;
+        font-size:medium;
+    }
+</style>
 
 </head>
 <body>
@@ -58,7 +64,8 @@
 
                     </tr>
                 </table>
-                <h1>Actualizar Tarjeta</h1>
+                <br><br>
+                <h1>Registrar Consulta en la Tarjeta</h1>
                 <div>
                     <form method="post" action="/update">
                         <% 
@@ -71,29 +78,37 @@
                         <table>
                             <tr>
                                 <td>
+                                    <label>Hora de esta Cita</label>
                                     <input type="text"  name="hora_cita" value="<%= dateTime %>" readonly>
                                 </td>
                                 <td>
+                                    <label>Proxima Cita</label>
+                                    <input type="datetime-local" name="proxima_cita" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <select name="motivo" id="select-list">
                                         <option value="Citas">Cita</option>
+                                        <option value="Vacunacion">Vacunacion</option>
+                                        <option value="Consulta">Consulta</option>
                                         <option value="otro">Otro</option>
                                         <input type="text" id="txt-custom" name="otro_valor" placeholder="Nuevo Motivo"/>
                                     </select>
                                 </td>
                                 <td>
-                                    <input name="detalles" placeholder="Resuma en una linea la consulta" style="width: 400px;" >
+                                    <input name="detalles" placeholder="Resuma en una linea la consulta, ¿Que se le vacuno?" style="width: 500px;" >
                                 </td>
                             </tr>
                             <tr>
                                 <td><input name="peso" placeholder="Peso"></td>
                                 <td><input name="temperatura" placeholder="Temperatura"></td>
-                                <td><input name="peso" placeholder="Peso"></td>
                             </tr>
                         </table>
                         
-                        <input type="text" value="<%= consulta._id %>" name="identificador">
-                        <input type="text" value="<%= consulta._rev%>" name="rev">
-                        <input type="submit" value="Agregar Cambios ✅">
+                        <input type="text" value="<%= consulta._id %>" name="identificador" hidden>
+                        <input type="text" value="<%= consulta._rev%>" name="rev" hidden>
+                        <input type="submit" value="Agregar Cambios ✅" onclick="return confirm('Seguro que desea guardar este registro?')">
                       <script>
                         let selectEl = document.getElementById('select-list');
                         document.getElementById('txt-custom').style.display = 'none';
@@ -106,8 +121,9 @@
                         });
                       </script>
                     </form>
+                    <br>
+                    <input type="button" value="Regresar 🔙" onclick="history.back()">
                 </div>
-                
             </div>
         </div>
         <!--JS-->
