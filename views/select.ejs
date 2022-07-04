@@ -49,18 +49,18 @@
                     <h3 class="about_taital"><strong><span style="color: #ffffff;">Tarjeta de </span><%= consulta.PetName %></strong></h3>
 
                     <tr>
-                        <th>Identificacion <%= consulta.PetID %></th>
+                        <th>Identificacion: <%= consulta._id %></th>
                     </tr>
                     <tr>
                         <th>Datos Generales</th>
-                        <td>Raza <%= consulta.Raza %></td>
-                        <td>Sexo <%= consulta.Sexo %></td>
-                        <td>Fecha de Nacimiento <%= consulta.Birth %></td>
+                        <td>Raza: <%= consulta.Raza %></td>
+                        <td>Sexo: <%= consulta.Sexo %></td>
+                        <td>Fecha de Nacimiento: <%= consulta.Birth %></td>
                     </tr>
                     <tr>
                         <th>Datos del Propietario</th>
-                        <td>Nombre <%= consulta.PetOwnerName %></td>
-                        <td>Telefono <%= consulta.OwnerPhone %></td>
+                        <td>Nombre del Dueño: <%= consulta.PetOwnerName %></td>
+                        <td>Telefono: <%= consulta.OwnerPhone %></td>
 
                     </tr>
                 </table>
@@ -81,10 +81,7 @@
                                     <label>Hora de esta Cita</label>
                                     <input type="text"  name="hora_cita" value="<%= dateTime %>" readonly>
                                 </td>
-                                <td>
-                                    <label>Proxima Cita</label>
-                                    <input type="datetime-local" name="proxima_cita" >
-                                </td>
+                                <td>⏰</td>
                             </tr>
                             <tr>
                                 <td>
@@ -103,6 +100,13 @@
                             <tr>
                                 <td><input name="peso" placeholder="Peso"></td>
                                 <td><input name="temperatura" placeholder="Temperatura"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Proxima Cita</label>
+                                <input type="datetime-local" name="proxima_cita" >
+                                </td>
+                                <td>⏲</td>
                             </tr>
                         </table>
                         

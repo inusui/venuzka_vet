@@ -154,6 +154,7 @@ app.post('/update', function(req, res){
     let detalles = req.body.detalles;
     let id =req.body.identificador;
     let rev = req.body.rev;
+    let proxima_cita = req.body.proxima_cita;
     if(motivo.includes('otro')){
         
         motivo = req.body.otro_valor
@@ -182,20 +183,14 @@ app.post('/update', function(req, res){
            
             console.log("Quiete el '}'? \n", STRINGviejosDatos);
 
-            let registro = STRINGviejosDatos+',{"hora": "'+hora_cita+'" ,"razon": "' + motivo + '", ' +  ' "detalles": "' + detalles + '" }]}'
+            let registro = STRINGviejosDatos+',{"Hora": "'+hora_cita+'" ,"Motivo": "' + motivo + '", ' +  ' "Detalles": "' + detalles + '","Proxima Cita": "' + proxima_cita +'" }]}'
             let estoyTilteado = JSON.parse(registro)
-            console.log(
-                "Sera un JSON>\n",estoyTilteado
-                /*(╯°□°）╯︵ ┻━┻
-                    (╯°□°）╯︵ ┻━┻
-                        (╯°□°）╯︵ ┻━┻
-                            (╯°□°）╯︵ ┻━┻
-                                (╯°□°）╯︵ ┻━┻
-                                    (╯°□°）╯︵ ┻━┻
+            
+            console.log("Sera un JSON>\n",estoyTilteado)
+             /*(╯°□°）╯︵ ┻━┻
                 #TODO: debes enviar la peticion en formato JSON, dentro de una variable, por tanto debes por concatenacion 
                 construir una varibale con todo el JSON que mandaras en el update
-                （︶^︶）*/
-            )
+                */
             res.render('select',{ consulta:data.data});            
 
             /*Ahora el update*/
