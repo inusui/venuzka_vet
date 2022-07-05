@@ -3,7 +3,30 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 /** Ping */
-
+const exec = require("child_process").exec;
+const fs = require("fs")
+let hosts = ['20.78.56.34']
+let replys = "Respuesta de"
+let promesa = []
+hosts.forEach(host =>{
+    promesa.push(new Promise((res, rej) => {
+      exec('ping -n 1 -w 1000 ${host}', (err, stdo, stde) => {
+        let status = "Offline"
+        let output = stdo.toString()
+        let replysI = output.indexOf(replys)
+        if(replysI > 0 && output.substring(replysI).toUpperCase().indexOf("BYTES") > 0) {
+            status = "online"
+        }
+        resolve (new Date().toISOString() + " " + host + " " + status)
+        
+      })  
+    }))
+})
+Promise.all(promesa).then((resultado)=>{
+    fs.writeFile("res.txt", resultado.join("\n"), (err) =>{
+        if (err){console.log(err)}
+    })
+})
 
 //main 
 let hosting = '20.78.56.34'
@@ -11,12 +34,11 @@ let hosting = '20.78.56.34'
 hosting ='20.90.25.17'
 //africa
 hosting = '102.37.156.108'
-hosting = '5'
-
 
 
 //Couch
 const NodeCouchDb = require('node-couchdb');
+const { resolve } = require('path');
 //const { nextTick, stdout, stderr } = require('process');
 try {
     
@@ -58,16 +80,13 @@ let couch = new NodeCouchDb({
         password: 'mypwd'
     }
 });
+
+
 console.log("Se quiere Conectar a "+ couch._baseUrl)
 
-for (i in couch){
-    console.log("Estoy en ["+ i +"]\ny tengo\n"+couch[i])
-}
-console.log("Acceder al warpper ese "+ couch._requestWrappedDefaults )
 
-couch.listDatabases().then(function(dbs){
-    console.log(dbs)
-})
+
+
 const dbname = 'veterinaria'
 const viewUrl = '_design/Datos-de-la-mascota/_view/PetData'
 
