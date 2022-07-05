@@ -5,6 +5,8 @@ const path = require('path');
 
 /** Ping */
 const exec = require("child_process").exec;
+const execSync = require("child_process").execSync;
+
 const fs = require("fs");
 
 const hosts = ["server01-ip.japaneast.cloudapp.azure.com", "server02.southafricanorth.cloudapp.azure.com","server03.ukwest.cloudapp.azure.com", "127.0.0.1"];
@@ -23,31 +25,59 @@ hosts.forEach(host => {
             if (replyFromIndex > 0 && output.substring(replyFromIndex).toUpperCase().indexOf("BYTES") > 0) {
                 status = "online"
             }
-            resolve( host + " " + status)
+            resolve( host + ", " + status)
         })
     }))
 })
 
 
-Promise.all(promises).then((res) => {
-
-    fs.appendFile("Pinglog.txt", new Date().toISOString() + "\n"+res.join("\n"), (err) => {
-        if (err) { console.log(err); }
-    })
-    fs.appendFile("Pinglog.txt", ("\n********************\n"), (err) => {
-        if (err) { console.log(err); }
-    })
+function getHost(){
+    const hosts = ["127.0.0.1","server01-ip.japaneast.cloudapp.azure.com", "server02.southafricanorth.cloudapp.azure.com","server03.ukwest.cloudapp.azure.com"];
+    //et a = null
+    let i = 0
+    let quizas
+    for (i in hosts){
+    console.log(hosts[i])
+    let temporal = hosts[i]
+    try {
+        
     
-})
+       var r = execSync(`ping -n 1 -w 1000 ${temporal}`, (err, stdout, stderr) => {
+        
+        let status = "offline";
+        let output = stdout.toString();
+        let replyFromIndex = output.indexOf(replyFromLocale);
+        if (replyFromIndex > 0 && output.substring(replyFromIndex).toUpperCase().indexOf("BYTES") > 0) {
+            status = "online"
+            
+            
+        }
+        resolve( temporal + ", " + status)
+         })
+       console.log(
+        "Estoy serio\n" + r.toString() + "*************************************************\n"
+       )
+       if(r.toString().includes('Received = 1')){
+        quizas = hosts[i]
+        console.log('^_____^' + quiazs)
+       }
+    } catch (error) {
+        console.log(error)
+    }
+    }
+    console.log(":):):):):):):):)"+quizas)
+    return quizas
+}
 
 //Couch
 const NodeCouchDb = require('node-couchdb');
 const { resolve } = require('path');
+const { render } = require('ejs');
 
 
 
 let couch = new NodeCouchDb({
-    host: 'nose',
+    host: getHost(),
     port:'5984',
 
     auth:{
@@ -58,9 +88,6 @@ let couch = new NodeCouchDb({
 
 
 console.log("Se quiere Conectar a "+ couch._baseUrl)
-
-
-
 
 const dbname = 'veterinaria'
 const viewUrl = '_design/Datos-de-la-mascota/_view/PetData'

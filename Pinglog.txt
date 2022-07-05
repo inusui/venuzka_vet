@@ -1,6 +1,31 @@
-2022-07-05T16:03:40.682Z
-server01-ip.japaneast.cloudapp.azure.com online
-server02.southafricanorth.cloudapp.azure.com online
-server03.ukwest.cloudapp.azure.com online
-127.0.0.1 online
+2022-07-05T17:05:34.650Z
+server01-ip.japaneast.cloudapp.azure.com, online
+server02.southafricanorth.cloudapp.azure.com, online
+server03.ukwest.cloudapp.azure.com, online
+127.0.0.1, online
 ********************
+2022-07-05T17:05:45.264Z
+server01-ip.japaneast.cloudapp.azure.com, online
+server02.southafricanorth.cloudapp.azure.com, online
+server03.ukwest.cloudapp.azure.com, online
+127.0.0.1, online
+********************
+2022-07-05T17:08:17.015Z
+server01-ip.japaneast.cloudapp.azure.com, online
+server02.southafricanorth.cloudapp.azure.com, online
+server03.ukwest.cloudapp.azure.com, online
+127.0.0.1, online
+********************
+2022-07-05T17:08:32.925Z
+server01-ip.japaneast.cloudapp.azure.com, online
+server02.southafricanorth.cloudapp.azure.com, online
+server03.ukwest.cloudapp.azure.com, online
+127.0.0.1, online
+********************
+
+********************
+2022-07-05T17:19:39.595Z
+server01-ip.japaneast.cloudapp.azure.com, online
+server02.southafricanorth.cloudapp.azure.com, online
+server03.ukwest.cloudapp.azure.com, online
+127.0.0.1, online
