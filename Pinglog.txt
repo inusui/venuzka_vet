@@ -1,0 +1,6 @@
+2022-07-05T16:03:40.682Z
+server01-ip.japaneast.cloudapp.azure.com online
+server02.southafricanorth.cloudapp.azure.com online
+server03.ukwest.cloudapp.azure.com online
+127.0.0.1 online
+********************

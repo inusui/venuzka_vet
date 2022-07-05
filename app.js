@@ -2,77 +2,52 @@ const express = require ('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+
 /** Ping */
 const exec = require("child_process").exec;
-const fs = require("fs")
-let hosts = ['20.78.56.34']
-let replys = "Respuesta de"
-let promesa = []
-hosts.forEach(host =>{
-    promesa.push(new Promise((res, rej) => {
-      exec('ping -n 1 -w 1000 ${host}', (err, stdo, stde) => {
-        let status = "Offline"
-        let output = stdo.toString()
-        let replysI = output.indexOf(replys)
-        if(replysI > 0 && output.substring(replysI).toUpperCase().indexOf("BYTES") > 0) {
-            status = "online"
-        }
-        resolve (new Date().toISOString() + " " + host + " " + status)
-        
-      })  
+const fs = require("fs");
+
+const hosts = ["server01-ip.japaneast.cloudapp.azure.com", "server02.southafricanorth.cloudapp.azure.com","server03.ukwest.cloudapp.azure.com", "127.0.0.1"];
+
+const replyFromLocale = "Reply from";
+
+const promises = [];
+
+hosts.forEach(host => {
+    promises.push(new Promise((resolve, reject) => {
+        exec(`ping -n 1 -w 1000 ${host}`, (err, stdout, stderr) => {
+           
+            let status = "offline";
+            let output = stdout.toString();
+            let replyFromIndex = output.indexOf(replyFromLocale);
+            if (replyFromIndex > 0 && output.substring(replyFromIndex).toUpperCase().indexOf("BYTES") > 0) {
+                status = "online"
+            }
+            resolve( host + " " + status)
+        })
     }))
 })
-Promise.all(promesa).then((resultado)=>{
-    fs.writeFile("res.txt", resultado.join("\n"), (err) =>{
-        if (err){console.log(err)}
+
+
+Promise.all(promises).then((res) => {
+
+    fs.appendFile("Pinglog.txt", new Date().toISOString() + "\n"+res.join("\n"), (err) => {
+        if (err) { console.log(err); }
     })
+    fs.appendFile("Pinglog.txt", ("\n********************\n"), (err) => {
+        if (err) { console.log(err); }
+    })
+    
 })
-
-//main 
-let hosting = '20.78.56.34'
-//UK
-hosting ='20.90.25.17'
-//africa
-hosting = '102.37.156.108'
-
 
 //Couch
 const NodeCouchDb = require('node-couchdb');
 const { resolve } = require('path');
-//const { nextTick, stdout, stderr } = require('process');
-try {
-    
-} catch (error) {
-    console.log(error)
-}
+
+
 
 let couch = new NodeCouchDb({
-    //Localhost
-    host: 'server01-ip.japaneast.cloudapp.azure.com',
-    port:'5984',
-
-    auth:{
-        user:'admin',
-        password: 'mypwd'
-    },
-    //Server01
-    host: 'server01-ip.japaneast.cloudapp.azure.com',
-    port:'5984',
-
-    auth:{
-        user:'admin',
-        password: 'mypwd'
-    },
-    //server02 Africa
-    host: 'server02.southafricanorth.cloudapp.azure.com',
-    port:'5984',
-
-    auth:{
-        user:'admin',
-        password: 'mypwd'
-    },
-    //server 03 UK
-    host: 'server03.ukwest.cloudapp.azure.com',
+    host: 'nose',
     port:'5984',
 
     auth:{
