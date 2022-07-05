@@ -2,39 +2,21 @@ const express = require ('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-/*Ping to Servers*/
-var Ping = require('ping-wrapper');
 
-
-// load configuration from file 'config-default-' + process.platform
-// Only linux is supported at the moment
-Ping.configure();
-
-
-var ping = new Ping('20.78.56.34');
-let c = 0
-ping.on('ping', function(data){
-	console.log('Ping %s: time: %d ms', data.host, data.time,c);
-    c = c + 1
-    if (c == 3) {
-       
-        setTimeout(function() {ping.stop();
-        console.log("😀Ping Detenido")}, 1000);
-        //ping.stop();
-    }
-});
-
-ping.on('fail', function(data){
-	console.log('Fail', data);
-});
-
+//main 
+let hosting = '20.78.56.34'
+//africa
+hosting = '102.37.156.108'
+//UK
+hosting ='20.90.25.17'
 
 
 //Couch
 const NodeCouchDb = require('node-couchdb');
 const { nextTick } = require('process');
-const couch = new NodeCouchDb({
-    host: 'server01-ip.japaneast.cloudapp.azure.com',
+
+let couch = new NodeCouchDb({
+    host: hosting,
     port:'5984',
 
     auth:{
@@ -42,6 +24,7 @@ const couch = new NodeCouchDb({
         password: 'mypwd'
     }
 });
+
 
 
 
