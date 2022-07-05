@@ -2,21 +2,55 @@ const express = require ('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+/** Ping */
+
 
 //main 
 let hosting = '20.78.56.34'
-//africa
-hosting = '102.37.156.108'
 //UK
 hosting ='20.90.25.17'
+//africa
+hosting = '102.37.156.108'
+hosting = '5'
+
 
 
 //Couch
 const NodeCouchDb = require('node-couchdb');
-const { nextTick } = require('process');
+//const { nextTick, stdout, stderr } = require('process');
+try {
+    
+} catch (error) {
+    console.log(error)
+}
 
 let couch = new NodeCouchDb({
-    host: hosting,
+    //Localhost
+    host: 'server01-ip.japaneast.cloudapp.azure.com',
+    port:'5984',
+
+    auth:{
+        user:'admin',
+        password: 'mypwd'
+    },
+    //Server01
+    host: 'server01-ip.japaneast.cloudapp.azure.com',
+    port:'5984',
+
+    auth:{
+        user:'admin',
+        password: 'mypwd'
+    },
+    //server02 Africa
+    host: 'server02.southafricanorth.cloudapp.azure.com',
+    port:'5984',
+
+    auth:{
+        user:'admin',
+        password: 'mypwd'
+    },
+    //server 03 UK
+    host: 'server03.ukwest.cloudapp.azure.com',
     port:'5984',
 
     auth:{
@@ -24,10 +58,16 @@ let couch = new NodeCouchDb({
         password: 'mypwd'
     }
 });
+console.log("Se quiere Conectar a "+ couch._baseUrl)
 
+for (i in couch){
+    console.log("Estoy en ["+ i +"]\ny tengo\n"+couch[i])
+}
+console.log("Acceder al warpper ese "+ couch._requestWrappedDefaults )
 
-
-
+couch.listDatabases().then(function(dbs){
+    console.log(dbs)
+})
 const dbname = 'veterinaria'
 const viewUrl = '_design/Datos-de-la-mascota/_view/PetData'
 
@@ -49,11 +89,11 @@ app.use('/css', express.static(__dirname + '/res/css'))
 app.use(express.static('res'));
 
 app.get('/',function(req,res){
-    //res.render('index');
-    //res.sendFile(path.join(__dirname+'/index.html'))
+    
     couch.get(dbname, viewUrl).then(
         function(data, headers, status){
             console.log(data.data.rows);
+           
             res.render('index',{
                 veterinaria:data.data.rows
             });
