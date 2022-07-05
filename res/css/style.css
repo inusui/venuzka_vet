@@ -22,8 +22,9 @@
 
 /*---------------------------------------------------------------------   Inu Code 🐺    --------------------------------------------------------------------*/
 .logo{
-    width: 65%;
-    border-radius: 40%;
+    width: 55%;
+    border-radius: 50%;
+    border: 3px solid   #18385D;
 }
 
 .tarjeta{
@@ -47,9 +48,32 @@
 .nuevaTarjeta, th, td{
     border: 1px solid black;
     text-align: left;
-    padding: 5px;
+}
+.registros{
+    border: 1px solid black;
+    width: 70%;
+    justify-content: right;
     height:fit-content;
 }
+
+.titulo{
+    width: 57%; 
+	float: left;
+	font-size: 50pt;
+	color: #2c2727;
+	text-align: right;
+   /* -webkit-text-stroke: 1px  #27ae60 ;  width and color */
+    
+}
+.subtitulo{
+    width: 90%;
+	float: left;
+	font-size: 18pt;
+	color:    white  ;
+	line-height: 50px;
+    text-shadow: 2px 2px 2px  black ;
+}
+
 /*
 
 presentar la demostracion martes 5 y miercoles 6

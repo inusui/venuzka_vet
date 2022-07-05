@@ -2,17 +2,48 @@ const express = require ('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-/*Confirm*/
+/*Ping to Servers*/
+var Ping = require('ping-wrapper');
+
+
+// load configuration from file 'config-default-' + process.platform
+// Only linux is supported at the moment
+Ping.configure();
+
+
+var ping = new Ping('20.78.56.34');
+let c = 0
+ping.on('ping', function(data){
+	console.log('Ping %s: time: %d ms', data.host, data.time,c);
+    c = c + 1
+    if (c == 3) {
+       
+        setTimeout(function() {ping.stop();
+        console.log("😀Ping Detenido")}, 1000);
+        //ping.stop();
+    }
+});
+
+ping.on('fail', function(data){
+	console.log('Fail', data);
+});
+
+
 
 //Couch
 const NodeCouchDb = require('node-couchdb');
 const { nextTick } = require('process');
 const couch = new NodeCouchDb({
+    host: 'server01-ip.japaneast.cloudapp.azure.com',
+    port:'5984',
+
     auth:{
         user:'admin',
-        password: 'admin'
+        password: 'mypwd'
     }
 });
+
+
 
 const dbname = 'veterinaria'
 const viewUrl = '_design/Datos-de-la-mascota/_view/PetData'
@@ -50,6 +81,7 @@ app.get('/',function(req,res){
         });
 });
 
+//  *   *   *   *   *   *   Nueva Tarjeta
 app.post('/'+dbname+'/add', function(req,res){
     
     let PetID = req.body.id;
@@ -65,6 +97,9 @@ app.post('/'+dbname+'/add', function(req,res){
     let Detalles = req.body.Detalles;
     let Peso = req.body.Peso;
     let Temperatura = req.body.Temperatura;
+    let hora_cita = req.body.hora_cita;
+    let nextDate = req.body.nextDate;
+    console.log(hora_cita + "\n" + nextDate)
 
     couch.get(dbname, PetID).then(
         function(data, headers, status){
@@ -86,16 +121,20 @@ app.post('/'+dbname+'/add', function(req,res){
                     OwnerPhone: OwnerPhone,
                     Direccion: Direccion,
                     Citas:[
-                        {Motivo:Motivo,
+                        {
+                        Fecha : hora_cita,
+                        Motivo:Motivo,
                         Detalles:Detalles,
                         Peso:Peso,
-                        Temperatura:Temperatura
+                        Temperatura:Temperatura,
+                        nextDate: nextDate
                     }
                     ]
         
                 }).then(
                     function(data, headers, status){
                         res.redirect('/')
+                        console.log(data.data)
                     },
                     function(error){
                         res.writeHead(500, { "Content-Type": "text/plain" }); 
@@ -111,7 +150,7 @@ app.post('/'+dbname+'/add', function(req,res){
     
     
 })
-
+//! *   *   *   *   *   *   Delete
 app.post('/'+dbname+'/delete/:id', function(req, res){
     let id = req.params.id;
     let rev = req.body.rev;
@@ -123,24 +162,24 @@ app.post('/'+dbname+'/delete/:id', function(req, res){
             },function(error){console.log(error)}
         )
     
-    
 });
 
-//Select by id
+//* *   *   *   *   *   Buscar por ID
 app.post('/select', function(req,res){
    
     let id = req.body.PetIDBuscar;
     //console.log(id)
+        
     couch.get(dbname, id).then(
         function(data, headers, status){
-            
+            console.log(data.data);
             res.render('select',{
                 consulta:data.data
             });
+            
         }, function(error){
-            res.send(error);
-            res.render('select');
-            console.log("(╯°□°）╯︵ ┻━┻ Error"+ error)
+            res.render('error',{ veterinaria:{_id:error}});  
+            console.log(error)
         }
     );
 });
@@ -183,7 +222,7 @@ app.post('/update', function(req, res){
            
             console.log("Quiete el '}'? \n", STRINGviejosDatos);
 
-            let registro = STRINGviejosDatos+',{"Hora": "'+hora_cita+'" ,"Motivo": "' + motivo + '", ' +  ' "Detalles": "' + detalles + '","Proxima Cita": "' + proxima_cita +'" }]}'
+            let registro = STRINGviejosDatos+',{"Fecha": "'+hora_cita+'" ,"Motivo": "' + motivo + '", ' +  ' "Detalles": "' + detalles + '","nextDate": "' + proxima_cita +'" }]}'
             let estoyTilteado = JSON.parse(registro)
             
             console.log("Sera un JSON>\n",estoyTilteado)
@@ -209,13 +248,10 @@ app.post('/update', function(req, res){
             );
             /*FIN UPDATE*/
         }, function(error){
-            res.send(error);
-            res.render('select');
+            
             console.log("(╯°□°）╯︵ ┻━┻ Error"+ error)
         }
     );
-
-    console.log(id," rev ", rev," Motivo: ", motivo,"\n" )
     
     
 });
@@ -223,5 +259,4 @@ app.post('/update', function(req, res){
 
 app.listen(3000, function(){
     console.log("Server iniciado en el puerto 3000");
-    
 });

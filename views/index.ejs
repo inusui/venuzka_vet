@@ -74,8 +74,8 @@
 				<div class="ram">
 					<div class="row">
 					    <div class="col-sm-12">
-						    <h1 class="taital">La Mejor Clinica Veterinaria</h1>
-						    <p class="consectetur_text">Consulta aqui la tarjeta de vacunacion de tu mascota</p>
+						    <h1 class="titulo">La Mejor Clinica Veterinaria</h1>
+						    <p class="subtitulo">Consulta aqui la tarjeta de vacunacion de tu mascota</p>
 						    <div class="banner_bt">
 						    	<button  class="read_bt" onclick="window.scrollTo(0,document.getElementById('nueva').scrollHeight);">Click Here</button>
                                 <br><br><br>
@@ -96,16 +96,37 @@
 				<div class="row">
 					<div class="col-sm-8">
 						<h3 class="get_taital">Crear Nueva Tarjeta</h3>
-						<table class="nuevaTarjeta">
+						<% 
+                        let dateTime = new Date()
+						let id = dateTime.getFullYear().toString()+(dateTime.getMonth()+1).toString()+dateTime.getDate().toString()+'-'+dateTime.getHours().toString() +dateTime.getMinutes().toString() +dateTime.getSeconds().toString();                
+                        
+						let minutos = "0"
+						if (dateTime.getMinutes() < 10){
+							minutos = "0" + dateTime.getMinutes().toString()
+						}else{
+							minutos = dateTime.getMinutes().toString()
+						}
+						let Time = dateTime.getHours().toString()+":"+ minutos +" "+dateTime.getDate().toString()+"-"+(dateTime.getMonth()+1).toString()+"-"+dateTime.getFullYear().toString()
+						%>
+						
 							<form method="post" action="/veterinaria/add">
+								<table class="nuevaTarjeta">
 								<tr>
-									<td><input type="text" name="id" placeholder="Identificador de la Mascota"></td>
-									<td><input type="text" name="PetName" placeholder="Nombre de la Mascota"></td>
-									
+									<td> 
+										<label>Identificador de la Mascota</label>
+										<input type="text"  name="id" value="<%= id %>" readonly>
+                                
+									</td>
+									<td>
+										<label>Fecha</label>
+										<input type="text"  name="hora_cita" value="<%= Time %>" readonly>
+									</td>
+																		
 								</tr>
 								<tr>
-									<td><input type="text" name="Especie" placeholder="Expecie"></td>
-									<td><input type="text" name="Raza" placeholder="Raza"></td>
+									<td><input type="text" name="PetName" placeholder="Nombre de la Mascota"></td>
+									<td><input type="text" name="Especie" placeholder="Expecie">
+									<input type="text" name="Raza" placeholder="Raza"></td>
 								</tr>
 								<tr>
 									<td>
@@ -113,7 +134,7 @@
 									<input type="radio" name="Sexo" value="F"><label>F</label>
 									<input type="radio" name="Sexo" value="M"><label>M</label>
 									</td>
-									<td><label>Fecha de Nacimiento</label><br>
+									<td><label>Fecha de Nacimiento</label>
 										<input type="date" name="Birth" placeholder="Fecha de Nacimiento">
 									</td>							
 								</tr>
@@ -127,14 +148,18 @@
 								</tr>
 								<tr>
 									<td><input type="text" name="Detalles" placeholder="Detalle corto de la Visita"></td>
-									<td><input type="number" name="Peso" placeholder="Peso en Libras"></td>
+									<td><input type="number" name="Peso" step="any" placeholder="Peso en Libras"></td>
 								</tr>
 								<tr>
-									<td><input type="number" name="Temperatura" placeholder="Temperatura en °C"></td>
-									<td><input type="submit" value="Agregar Datos"></td>
+									<td><input type="number" name="Temperatura" step="any" placeholder="Temperatura en °C"></td>
+									<td>
+										<label for="">Proxima Cita:</label>
+										<input type="datetime-local" name="nextDate"></td>
 								</tr>
+							</table>
+								<input class="subscribe_bt" type="submit" onclick="return confirm('¿Seguro que desea Agregar el Registro?');" value="Agregar Datos">
 							</form>
-						</table>
+						
 					</div>
 					<div class="col-sm-4">
 						<div class="dog_img"><img src="images/cat-img.png" style="max-width: 100%;"></div>
@@ -154,6 +179,7 @@
     			<div class="col-sm-12">
     				<h1 class="about_taital"><strong><span style="color: #ffffff;">Buscar</span> Tarjeta</strong></h1>
 				    <p class="sed_text"> Busca la Tarjeta de tu mascota</p>
+					<p class="sed_text"> Registra una nueva Cita</p>
 
 					<form method="post" action="/select">
 						<input type="text" name="PetIDBuscar" placeholder="Identificacion de tu Mascota" style="width: 25%;" required>
@@ -166,52 +192,6 @@
     </div>
 
 </section>
-<!--
-<section id="all">
-    <div class="gallery_section_2">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-sm-8">
-    				<table class="tarjeta">
-						<h2 class="pet_taital">Todas las tarjetas</h2>
-					<br><br><br><br><br>
-						<% veterinaria.forEach(function(veterinaria){%>
-						<tr><th>Datos Generales de  <h3><%= veterinaria.value.PetName %></h3> </th></tr>
-						<tr>
-							<th>Identificacion: <%= veterinaria.id %> </th>
-							<th>Raza: <%= veterinaria.value.Raza %> </th>
-							<th>Sexo <%= veterinaria.value.Sexo %></th>
-							<th>Fecha de Nacimiento: <%= veterinaria.value.Birth %></th>
-						</tr>
-						<tr>
-							<td>Nombre del Dueño: <%= veterinaria.value.PetOwnerName %></td>
-							<td>Telefono: <%= veterinaria.value.OwnerPhone %></td>
-							<td>
-								<form method="post" action="/veterinaria/delete/<%= veterinaria.key %>">
-									<input  type="hidden" value="<%= veterinaria.value.rev %>" name="rev">
-									<input type="submit" class="botonAlingRight" onclick="return confirm('Seguro que desea Eliminar este Registro?');" value="Eliminar Registro X">
-								</form>
-							</td>
-							<td>
-								
-							</td>
-						</tr>
-	
-						<% }); %>
-	
-					</table> <br> <br> <br><div class="banner_bt">
-					<button class="dog_bt">Read More</button>
-				</div>
-    			</div>
-    			<div class="col-sm-4">
-    				<div class="dog_img"><img src="images/dog-img.png" style="max-width: 100%;"></div>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-</section>
-	<!-- section gallery end -->
-	<!-- section get in touch start -->
 <section id="todas_las_tarjetas">
     <div class="touch_section">
     	<div class="container">
@@ -222,7 +202,8 @@
     		</div>
     		<div class="email_box">
 				<table class="tarjeta">
-					<% veterinaria.forEach(function(veterinaria){%>
+					<% let c =0
+					 veterinaria.forEach(function(veterinaria){%>
 					<tr>
 						<th>Datos Generales:<h3><%= veterinaria.value.PetName %></h3></th>
 						<th>Identificacion: <%= veterinaria.id %></th>
@@ -233,16 +214,30 @@
 						<th>Sexo <%= veterinaria.value.Sexo %></th>
 						<th>Fecha de Nacimiento: <%= veterinaria.value.Birth %></th>
 					</tr>
+
 					<tr>
 						<th>Nombre del Dueño: <%= veterinaria.value.PetOwnerName %></th>
 						<th>Telefono: <%= veterinaria.value.OwnerPhone %></th>
 						<td>
 							<form method="post" action="/veterinaria/delete/<%= veterinaria.key %>">
 								<input  type="hidden" value="<%= veterinaria.value.rev %>" name="rev">
-								<input type="submit" class="botonAlingRight" onclick="return confirm('Seguro que desea Eliminar este Registro?');" value="Eliminar Registro X">
+								<input type="submit" class="botonAlingRight" onclick="return confirm('¿Seguro que desea Eliminar a <%= veterinaria.value.PetName %>?');" value="Eliminar Registro X">
 							</form>
 						</td>
 					</tr>
+					
+						<%
+							for(i in veterinaria.value.Citas){
+						%>
+						<tr>
+							<th>Fecha de la Conulta: <%=veterinaria.value.Citas[i].Fecha %> Motivo de la Consulta: <%= veterinaria.value.Citas[i].Motivo %></th>
+							<th>Detalles: <%= veterinaria.value.Citas[i].Detalles %></th>
+							<th>Peso: <%= veterinaria.value.Citas[i].Peso %>Lbs     Temperatura: <%= veterinaria.value.Citas[i].Temperatura %>°C</th>
+						</tr>
+						<%
+							}
+						%>
+						
 					<% }); %>
 
 				</table> <br> <br> <br>
@@ -253,92 +248,7 @@
 <section id="fooder">
 
 </section>
-<!-- 
-    <div class="touch_section_2">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-sm-12">
-    				<h1 class="our_texts">Our Newsletter</h1>
-    				<div class="input-group mb-3">
-                        <input class="email_bt" type="text" class="form-control" placeholder="Enter your email">
-                     <div class="input-group-append">
-                        <button class="subscribe_bt" class="btn btn-primary" type="Subscribe">Subscribe</button>  
-                     </div>
-                    </div>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-    !-- section get in touch end --
 
-	!-- section footer start --
-    <div class="section_footer">
-    	<div class="container">
-    		<div class="mail_section">
-    			<ul>
-    				<li class="footer-logo"><img src="images/footer-logo.png"></li>
-    				<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>
-    				<li class="footer-logo"><img src="images/call-icon.png"><span class="map_text">(+71) 9876543210</span></li>
-    				<li class="footer-logo"><img src="images/email-icon.png"><span class="map_text">Demo@gmail.com</span></li>
-    			</ul>
-    	    </div> 
-    	    <div class="footer_section_2">
-		        <div class="row">
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    		        	<h2 class="shop_text">About Pet Shop</h2>
-    		        	<p class="dummy_text">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and </p>
-    		        </div>
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    		        	<h2 class="shop_text">Useful Links</h2>
-    		        	<div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
-    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
-    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
-    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
-    		        </div>
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    				    <h2 class="shop_text">Overview</h2>
-    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
-    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-    				    <div class="image-icon"><img src="images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>    				
-    		        </div>
-    			<div class="col-sm-6 col-md-6 col-lg-3">
-    				<h2 class="adderess_text">Instagram</h2>
-    				<div class="footer-img">
-    					<div class="row">
-    						<div class="col-sm-6">
-    							<div class="footer-img"><img src="images/footer-img1.png" style="width: 100%;"></div>
-    							<div class="footer-img"><img src="images/footer-img2.png" style="width: 100%;"></div>
-    						</div>
-    						<div class="col-sm-6">
-    							<div class="footer-img"><img src="images/footer-img3.png" style="width: 100%;"></div>
-    							<div class="footer-img"><img src="images/footer-img4.png" style="width: 100%;"></div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			</div>
-    	        </div>
-    	        <div class="social-icon">
-	        	    <div class="row">
-	        		    <div class="col-sm-12">
-	        			    <div class="icons">
-	        				    <ul>
-	        					    <li><a href="#"><img src="images/fb-icon.png"></a></li>
-	        					    <li><a href="#"><img src="images/twitter-icon.png"></a></li>
-	        					    <li><a href="#"><img src="images/google-icon.png"></a></li>
-	        					    <li><a href="#"><img src="images/linkedin-icon.png"></a></li>
-	        				    </ul>
-	        			    </div>
-	        		    </div>
-	        	    </div>
-	            </div>
-	            <div class="copyright">2019 All Rights Reserved. <a href="https://html.design">Free html Templates</a></div>
-	        </div>
-    	</div>
-    </div>
-	<!-- section footer end 
--->
 
 	<!-- MyJS Files-->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

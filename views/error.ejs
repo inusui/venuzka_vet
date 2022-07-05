@@ -35,7 +35,15 @@
         background-color: black;
         color: rgb(10, 241, 133);
         text-align: left;
-        margin-left: 50px;
+        margin-left: 25px;
+    }
+    p{
+        color: rgb(10, 241, 133);
+        
+      
+    }
+    h1{
+        color: rgb(10, 241, 133);
     }
 </style>
 
@@ -44,9 +52,10 @@
 
     <h1>❌Ocurrio un Error❌</h1>
     
-    <p>La Tarjeta con la identificacion "<%= veterinaria._id %>" ya existe. <br>
-    Las identificaciones son unicas dele al boton para regresar.</p>
-    <button onclick="history.back()">Go Back</button>
+    <p>Conflicto en la base de datos con Identificador, <b> "<%= veterinaria._id %>" </b>. <br>
+    Revise bien sus Inputs y vuelva a intentarlo.
+    <br>dele al boton regresar</p>
+    <button onclick="history.back()">regresar🔙</button>
 
 </body>
 </html>

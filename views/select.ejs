@@ -61,19 +61,40 @@
                         <th>Datos del Propietario</th>
                         <td>Nombre del Dueño: <%= consulta.PetOwnerName %></td>
                         <td>Telefono: <%= consulta.OwnerPhone %></td>
-
                     </tr>
                 </table>
+                <br>
+
+                <h1>Todos los Registros</h1>
+                <table class="registros">
+                    <% for(i in consulta.Citas){ %>
+                        <tr>
+                            <td>Fecha: <%= consulta.Citas[i].Fecha %></td>
+                            <td>Motivo: <%= consulta.Citas[i].Motivo %></td>
+                        </tr>
+                        <tr>
+                            <td>Detalles: <%= consulta.Citas[i].Detalles %></td>
+                        </tr>
+                        <tr>
+                            <td>Peso: <%= consulta.Citas[i].Peso %>Lbs</td>
+                            <td>Temperatura: <%= consulta.Citas[i].Temperatura %>°C</td>
+                        </tr>
+                        <tr>
+                            <td>Proxima Cita: <%= consulta.Citas[i].nextDate %></td>
+                        </tr>
+                    <% } %>
+                </table>
+
                 <br><br>
                 <h1>Registrar Consulta en la Tarjeta</h1>
                 <div>
                     <form method="post" action="/update">
                         <% 
                         let today = new Date()
-                        let date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
-                        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                        let time = today.getHours() + ":" + today.getMinutes()
 
-                        var dateTime = date+' '+time;
+                        let dateTime = date+' '+time;
                         %>
                         <table>
                             <tr>
@@ -98,8 +119,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><input name="peso" placeholder="Peso"></td>
-                                <td><input name="temperatura" placeholder="Temperatura"></td>
+                                <td><input type="number" step="any" name="peso" placeholder="Peso"></td>
+                                <td><input type="number" name="temperatura" placeholder="Temperatura" step="any"></td>
                             </tr>
                             <tr>
                                 <td>
