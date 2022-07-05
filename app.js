@@ -25,24 +25,32 @@ hosts.forEach(host => {
             if (replyFromIndex > 0 && output.substring(replyFromIndex).toUpperCase().indexOf("BYTES") > 0) {
                 status = "online"
             }
-            resolve( host + ", " + status)
+            resolve( new Date().toString() +"\n"+ host + " - " + status + "\n")
         })
     }))
 })
-
+Promise.all(promises).then((results) => {
+    fs.appendFile("pinglog.txt", ("**********************************************************\n"), (err) => {
+        if (err) { console.log(err); }
+    })
+    fs.appendFile("pinglog.txt", results.join("\n"), (err) => {
+        if (err) { console.log(err); }
+    })
+    
+    
+})
 
 function getHost(){
     const hosts = ["127.0.0.1","server01-ip.japaneast.cloudapp.azure.com", "server02.southafricanorth.cloudapp.azure.com","server03.ukwest.cloudapp.azure.com"];
     //et a = null
     let i = 0
-    let quizas
+    let elHost
     for (i in hosts){
-    console.log(hosts[i])
-    let temporal = hosts[i]
+    
+    let pingHost = hosts[i]
     try {
         
-    
-       var r = execSync(`ping -n 1 -w 1000 ${temporal}`, (err, stdout, stderr) => {
+       var r = execSync(`ping -n 1 -w 1000 ${pingHost}`, (err, stdout, stderr) => {
         
         let status = "offline";
         let output = stdout.toString();
@@ -52,21 +60,19 @@ function getHost(){
             
             
         }
-        resolve( temporal + ", " + status)
-         })
-       console.log(
-        "Estoy serio\n" + r.toString() + "*************************************************\n"
-       )
+        resolve( pingHost + ", " + status)
+        })
+
        if(r.toString().includes('Received = 1')){
-        quizas = hosts[i]
-        console.log('^_____^' + quiazs)
+        elHost = hosts[i]
+       // console.log('^_____^' + quiazs)
        }
     } catch (error) {
         console.log(error)
     }
     }
-    console.log(":):):):):):):):)"+quizas)
-    return quizas
+    
+    return elHost
 }
 
 //Couch
@@ -229,7 +235,7 @@ app.post('/select', function(req,res){
 });
 
 
-//Update
+//? -------------------------------------- ------------ -------- 💿Update💿
 app.post('/update', function(req, res){
     
     let hora_cita = req.body.hora_cita;
@@ -238,6 +244,8 @@ app.post('/update', function(req, res){
     let id =req.body.identificador;
     let rev = req.body.rev;
     let proxima_cita = req.body.proxima_cita;
+    let temperatura = req.body.temperatura;
+    let peso = req.body.peso;
     if(motivo.includes('otro')){
         
         motivo = req.body.otro_valor
@@ -266,10 +274,12 @@ app.post('/update', function(req, res){
            
             console.log("Quiete el '}'? \n", STRINGviejosDatos);
 
-            let registro = STRINGviejosDatos+',{"Fecha": "'+hora_cita+'" ,"Motivo": "' + motivo + '", ' +  ' "Detalles": "' + detalles + '","nextDate": "' + proxima_cita +'" }]}'
-            let estoyTilteado = JSON.parse(registro)
+            let registro = STRINGviejosDatos+',{"Fecha": "'+hora_cita+'" ,"Motivo": "' + motivo + '", ' +  ' "Detalles": "' + detalles 
+            +  '", "Peso": "' + peso +  '", "Temperatura": "' + temperatura  + '","nextDate": "' + proxima_cita +'" }]}'
+
+            let nuevoRegistro = JSON.parse(registro)
             
-            console.log("Sera un JSON>\n",estoyTilteado)
+            //console.log("Sera un JSON>\n",nuevoRegistro)
              /*(╯°□°）╯︵ ┻━┻
                 #TODO: debes enviar la peticion en formato JSON, dentro de una variable, por tanto debes por concatenacion 
                 construir una varibale con todo el JSON que mandaras en el update
@@ -277,9 +287,10 @@ app.post('/update', function(req, res){
             res.render('select',{ consulta:data.data});            
 
             /*Ahora el update*/
-            couch.update(dbname, estoyTilteado).then(
+            couch.update(dbname, nuevoRegistro).then(
                 function(data, headers, status){
-                    console.log(data)
+                    
+                    //? console.log(data) //Success
                     
                     res.render('select',{
                         consulta:data.data

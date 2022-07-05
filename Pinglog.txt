@@ -1,31 +1,72 @@
-2022-07-05T17:05:34.650Z
-server01-ip.japaneast.cloudapp.azure.com, online
-server02.southafricanorth.cloudapp.azure.com, online
-server03.ukwest.cloudapp.azure.com, online
-127.0.0.1, online
-********************
-2022-07-05T17:05:45.264Z
-server01-ip.japaneast.cloudapp.azure.com, online
-server02.southafricanorth.cloudapp.azure.com, online
-server03.ukwest.cloudapp.azure.com, online
-127.0.0.1, online
-********************
-2022-07-05T17:08:17.015Z
-server01-ip.japaneast.cloudapp.azure.com, online
-server02.southafricanorth.cloudapp.azure.com, online
-server03.ukwest.cloudapp.azure.com, online
-127.0.0.1, online
-********************
-2022-07-05T17:08:32.925Z
-server01-ip.japaneast.cloudapp.azure.com, online
-server02.southafricanorth.cloudapp.azure.com, online
-server03.ukwest.cloudapp.azure.com, online
-127.0.0.1, online
-********************
+Tue Jul 05 2022 13:52:19 GMT-0500 (Colombia Standard Time)
+server01-ip.japaneast.cloudapp.azure.com - online
 
-********************
-2022-07-05T17:19:39.595Z
-server01-ip.japaneast.cloudapp.azure.com, online
-server02.southafricanorth.cloudapp.azure.com, online
-server03.ukwest.cloudapp.azure.com, online
-127.0.0.1, online
+Tue Jul 05 2022 13:52:19 GMT-0500 (Colombia Standard Time)
+server02.southafricanorth.cloudapp.azure.com - online
+
+Tue Jul 05 2022 13:52:19 GMT-0500 (Colombia Standard Time)
+server03.ukwest.cloudapp.azure.com - online
+
+Tue Jul 05 2022 13:52:19 GMT-0500 (Colombia Standard Time)
+127.0.0.1 - online
+**********************************************************
+**********************************************************
+Tue Jul 05 2022 13:52:24 GMT-0500 (Colombia Standard Time)
+server01-ip.japaneast.cloudapp.azure.com - online
+
+Tue Jul 05 2022 13:52:24 GMT-0500 (Colombia Standard Time)
+server02.southafricanorth.cloudapp.azure.com - online
+
+Tue Jul 05 2022 13:52:24 GMT-0500 (Colombia Standard Time)
+server03.ukwest.cloudapp.azure.com - online
+
+Tue Jul 05 2022 13:52:24 GMT-0500 (Colombia Standard Time)
+127.0.0.1 - online
+**********************************************************
+Tue Jul 05 2022 13:52:35 GMT-0500 (Colombia Standard Time)
+server01-ip.japaneast.cloudapp.azure.com - online
+
+Tue Jul 05 2022 13:52:35 GMT-0500 (Colombia Standard Time)
+server02.southafricanorth.cloudapp.azure.com - online
+
+Tue Jul 05 2022 13:52:35 GMT-0500 (Colombia Standard Time)
+server03.ukwest.cloudapp.azure.com - online
+
+Tue Jul 05 2022 13:52:35 GMT-0500 (Colombia Standard Time)
+127.0.0.1 - online
+**********************************************************
+Tue Jul 05 2022 14:14:49 GMT-0500 (Colombia Standard Time)
+server01-ip.japaneast.cloudapp.azure.com - online
+
+Tue Jul 05 2022 14:14:49 GMT-0500 (Colombia Standard Time)
+server02.southafricanorth.cloudapp.azure.com - online
+
+Tue Jul 05 2022 14:14:49 GMT-0500 (Colombia Standard Time)
+server03.ukwest.cloudapp.azure.com - online
+
+Tue Jul 05 2022 14:14:49 GMT-0500 (Colombia Standard Time)
+127.0.0.1 - online
+**********************************************************
+Tue Jul 05 2022 14:17:09 GMT-0500 (Colombia Standard Time)
+server01-ip.japaneast.cloudapp.azure.com - online
+
+Tue Jul 05 2022 14:17:09 GMT-0500 (Colombia Standard Time)
+server02.southafricanorth.cloudapp.azure.com - online
+
+Tue Jul 05 2022 14:17:09 GMT-0500 (Colombia Standard Time)
+server03.ukwest.cloudapp.azure.com - online
+
+Tue Jul 05 2022 14:17:09 GMT-0500 (Colombia Standard Time)
+127.0.0.1 - online
+**********************************************************
+Tue Jul 05 2022 14:17:30 GMT-0500 (Colombia Standard Time)
+server01-ip.japaneast.cloudapp.azure.com - online
+
+Tue Jul 05 2022 14:17:30 GMT-0500 (Colombia Standard Time)
+server02.southafricanorth.cloudapp.azure.com - online
+
+Tue Jul 05 2022 14:17:30 GMT-0500 (Colombia Standard Time)
+server03.ukwest.cloudapp.azure.com - online
+
+Tue Jul 05 2022 14:17:30 GMT-0500 (Colombia Standard Time)
+127.0.0.1 - online
