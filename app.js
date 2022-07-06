@@ -41,7 +41,7 @@ Promise.all(promises).then((results) => {
 })
 
 function getHost(){
-    const hosts = ["127.0.0.1","server01-ip.japaneast.cloudapp.azure.com", "server02.southafricanorth.cloudapp.azure.com","server03.ukwest.cloudapp.azure.com"];
+    const hosts = ["localhost","server01-ip.japaneast.cloudapp.azure.com", "server02.southafricanorth.cloudapp.azure.com","server03.ukwest.cloudapp.azure.com"];
     //et a = null
     let i = 0
     let elHost
@@ -93,7 +93,7 @@ let couch = new NodeCouchDb({
 });
 
 
-console.log("Se quiere Conectar a "+ couch._baseUrl)
+console.log("♻Conexion a "+ couch._baseUrl)
 
 const dbname = 'veterinaria'
 const viewUrl = '_design/Datos-de-la-mascota/_view/PetData'

@@ -73,9 +73,9 @@
 				<div class="ram">
 					<div class="row">
 					    <div class="col-sm-12">
-						    <h1 class="titulo">La Mejor Clinica Veterinaria</h1>
-							<p class="subtitulo">La Disponibilidad es lo primero</p>
-						    <p class="subtitulo">Consulta aqui la tarjeta de vacunacion de tu mascota</p>
+						    <h1 class="titulo">La Mejor Clinica Veterinaria de Chitre</h1>
+							<p class="subtitulo">La Disponibilidad es lo primero🐦</p>
+						    <p class="subtitulo">Consulta aqui la tarjeta de vacunacion de tu mascota🔎</p>
 						    <div class="banner_bt">
 						    	<button  class="read_bt" onclick="window.scrollTo(0,document.getElementById('nueva').scrollHeight);">Click Here</button>
                                 <br><br><br>
@@ -158,6 +158,7 @@
 								</tr>
 							</table>
 								<input class="subscribe_bt" type="submit" onclick="return confirm('¿Seguro que desea Agregar el Registro?');" value="Agregar Datos">
+								<input class="more_bt" type="reset" onclick="return confirm('¿Seguro que va a limpiar la Tabla?');" value="Limpiar">
 							</form>
 						
 					</div>
@@ -250,31 +251,7 @@
 </section>
 
 
-	<!-- MyJS Files-->
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script>
-		  
-			Swal.fire({
-				title: '¿Confirma eliminar el registro: '+id+'?',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#d33',
-				cancelButtonColor: '#6c757d',
-				confirmButtonText: 'Confirmar'
-			}).then((result) => {
-				if (result.isConfirmed) {   
-					swalWithBootstrapButtons.fire(
-					'Deleted!',
-					'Your file has been deleted.',
-					'success'
-					)                            
-				}
-				return SubmitEvent
-			});
-		
-	</script>
-
-    <!-- Javascript files-->
+	<!-- Javascript files-->
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
