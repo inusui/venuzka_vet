@@ -274,8 +274,12 @@ app.post('/update', function(req, res){
            
             console.log("Quiete el '}'? \n", STRINGviejosDatos);
 
-            let registro = STRINGviejosDatos+',{"Fecha": "'+hora_cita+'" ,"Motivo": "' + motivo + '", ' +  ' "Detalles": "' + detalles 
-            +  '", "Peso": "' + peso +  '", "Temperatura": "' + temperatura  + '","nextDate": "' + proxima_cita +'" }]}'
+            let registro = STRINGviejosDatos+',{"Fecha": "'+hora_cita
+                            + '" ,"Motivo": "' + motivo 
+                            + '", ' + ' "Detalles": "' + detalles 
+                            + '", "Peso": "' + peso 
+                            +  '", "Temperatura": "' + temperatura  
+                            + '","nextDate": "' + proxima_cita +'" }]}'
 
             let nuevoRegistro = JSON.parse(registro)
             
