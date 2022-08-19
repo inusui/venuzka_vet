@@ -14,7 +14,10 @@ const hosts = ["server01-ip.japaneast.cloudapp.azure.com", "server02.southafrica
 const replyFromLocale = "Reply from";
 
 const promises = [];
-
+/**
+ * Realiza una consulta de estado a todos los servidores listados
+ * escribe su estado en el archivo Pinglog.txt
+ */
 hosts.forEach(host => {
     promises.push(new Promise((resolve, reject) => {
         exec(`ping -n 1 -w 1000 ${host}`, (err, stdout, stderr) => {
@@ -38,8 +41,12 @@ Promise.all(promises).then((results) => {
     })
     
     
-})
+});
 
+/**
+ * Realiza una consulta de estado a todos los host listados.  
+ * @returns host online
+ */
 function getHost(){
     const hosts = ["localhost","server01-ip.japaneast.cloudapp.azure.com", "server02.southafricanorth.cloudapp.azure.com","server03.ukwest.cloudapp.azure.com"];
     //et a = null
@@ -47,41 +54,39 @@ function getHost(){
     let elHost
     for (i in hosts){
     
-    let pingHost = hosts[i]
-    try {
-        
-       var r = execSync(`ping -n 1 -w 1000 ${pingHost}`, (err, stdout, stderr) => {
-        
-        let status = "offline";
-        let output = stdout.toString();
-        let replyFromIndex = output.indexOf(replyFromLocale);
-        if (replyFromIndex > 0 && output.substring(replyFromIndex).toUpperCase().indexOf("BYTES") > 0) {
-            status = "online"
+        let pingHost = hosts[i]
+        try {
             
+        var r = execSync(`ping -n 1 -w 1000 ${pingHost}`, (err, stdout, stderr) => {
             
-        }
-        resolve( pingHost + ", " + status)
-        })
+            let status = "offline";
+            let output = stdout.toString();
+            let replyFromIndex = output.indexOf(replyFromLocale);
+            if (replyFromIndex > 0 && output.substring(replyFromIndex).toUpperCase().indexOf("BYTES") > 0) {
+                status = "online"  
+            }
+            resolve( pingHost + ", " + status);
+            })
 
-       if(r.toString().includes('Received = 1')){
-        elHost = hosts[i]
-       // console.log('^_____^' + quiazs)
-       }
-    } catch (error) {
-        console.log(error)
-    }
+        if(r.toString().includes('Received = 1')){
+            elHost = hosts[i];
+        }
+        } catch (error) {
+            console.log(error);
+        }
     }
     
     return elHost
 }
 
-//Couch
+//##                                            o(*￣▽￣*)ブ           Couch
 const NodeCouchDb = require('node-couchdb');
 const { resolve } = require('path');
 const { render } = require('ejs');
-
-
-
+/**
+ * Realiza una llamada a la funcion getHost.
+ * De esta manera se conoce que host esta disponible para levantar el servidor
+ */
 let couch = new NodeCouchDb({
     host: getHost(),
     port:'5984',
@@ -94,11 +99,8 @@ let couch = new NodeCouchDb({
 
 
 console.log("♻Conexion a "+ couch._baseUrl)
-
 const dbname = 'veterinaria'
 const viewUrl = '_design/Datos-de-la-mascota/_view/PetData'
-
-
 
 const app = express();
 
@@ -108,11 +110,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-
-/*Importaciones
-app.use('/images', express.static(__dirname + '/res/images'));
-app.use('/css', express.static(__dirname + '/res/css'))
-*/
 app.use(express.static('res'));
 
 app.get('/',function(req,res){
@@ -159,7 +156,6 @@ app.post('/'+dbname+'/add', function(req,res){
             });
         }, function(error){
             couch.uniqid().then( function(){
-                //let id = ids[0];
                 couch.insert(dbname, {
                     _id: PetID,
                     PetName:PetName,
@@ -228,7 +224,7 @@ app.post('/select', function(req,res){
             });
             
         }, function(error){
-            res.render('error',{ veterinaria:{_id:error}});  
+            res.render('error',{ veterinaria:{id:error}});  
             console.log(error)
         }
     );
