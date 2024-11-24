@@ -89,11 +89,11 @@ const { render } = require('ejs');
  */
 let couch = new NodeCouchDb({
     host: getHost(),
-    port:'5984',
+    port:'',
 
     auth:{
-        user:'admin',
-        password: 'mypwd'
+        user:'',
+        password: ''
     }
 });
 
